@@ -1,3 +1,5 @@
+this is my code right now
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,8 +136,15 @@
                 };
 
                 try {
-                    await fetch(WEBHOOK_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
-                } catch (err) { console.warn("Webhook error:", err); }
+                    await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+} catch (err) {
+    console.warn("Webhook error:", err); }
 
                 setTimeout(() => { setIsSubmitting(false); setShowResults(true); window.scrollTo(0, 0); }, 1500);
             };
