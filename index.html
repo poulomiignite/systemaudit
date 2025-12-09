@@ -134,14 +134,18 @@
                 };
 
                 try {
-                    await fetch(WEBHOOK_URL, {
+    await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: {
+            "Accept": "application/json",
             "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
     });
 } catch (err) {
+    console.warn("Webhook error:", err);
+}
+ catch (err) {
     console.warn("Webhook error:", err); }
 
                 setTimeout(() => { setIsSubmitting(false); setShowResults(true); window.scrollTo(0, 0); }, 1500);
@@ -305,4 +309,5 @@
     </script>
 </body>
 </html>
+
 
