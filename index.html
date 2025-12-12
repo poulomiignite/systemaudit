@@ -52,21 +52,216 @@ const { useState, createElement: e } = React;
 
 /* ------------ ICONS ------------ */
 const ArrowRight = ({ className }) =>
-    e("svg", { className, xmlns:"http://www.w3.org/2000/svg", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2" },
+    e("svg", { className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
         e("path",{ d:"M5 12h14"}), e("path",{ d:"m12 5 7 7-7 7"}));
 
+const ArrowLeft = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+        e("path",{ d:"m12 19-7-7 7-7"}), e("path",{ d:"M19 12H5"}));
+
+const CheckCircle2 = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round"},
+        e("circle",{ cx:"12", cy:"12", r:"10"}), e("path",{ d:"m9 12 2 2 4-4"}));
+
 const BarChart3 = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
         e("path",{ d:"M3 3v18h18"}), e("path",{ d:"M18 17V9"}), e("path",{ d:"M13 17v-4"}), e("path",{ d:"M8 17V5"}));
+
+const Eye = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("path",{ d:"M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"}),
+        e("circle",{ cx:"12", cy:"12", r:"3"}));
+
+const MessageSquare = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("path",{ d:"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"}));
+
+const Settings = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("path",{ d:"M12.22 2h-.44a2 2 0 0 0-2 2v.44a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v.44a2 2 0 0 1-2 2h.44a2 2 0 0 0 2 2v.44a2 2 0 0 1 2 2v.44a2 2 0 0 0 2 2v.44a2 2 0 0 1 2 2h.44a2 2 0 0 0 2-2v-.44a2 2 0 0 1 2-2h.44a2 2 0 0 0 2-2v-.44a2 2 0 0 1 2-2h.44a2 2 0 0 0 2-2v-.44a2 2 0 0 1-2-2h-.44a2 2 0 0 0-2-2v-.44a2 2 0 0 1-2-2h-.44a2 2 0 0 0-2-2z"}),
+        e("circle",{ cx:"12", cy:"12", r:"3"}));
+
+const Users = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("path",{ d:"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"}),
+        e("circle",{ cx:"9", cy:"7", r:"4"}),
+        e("path",{ d:"M22 21v-2a4 4 0 0 0-3-3.87"}),
+        e("path",{ d:"M16 3.13a4 4 0 0 1 0 7.75"}));
+
+const Clock = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("circle",{ cx:"12", cy:"12", r:"10"}),
+        e("polyline",{ points:"12 6 12 12 16 14"}));
+
+const Star = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("polygon",{ points:"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"}));
+
+const ChevronRight = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("path",{ d:"m9 18 6-6-6-6"}));
+
+const UserIcon = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("path",{ d:"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"}),
+        e("circle",{ cx:"12", cy:"7", r:"4"}));
+
+const Mail = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("rect",{ width:"20", height:"16", x:"2", y:"4", rx:"2"}),
+        e("path",{ d:"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"}));
+
+const AlertCircle = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("circle",{ cx:"12", cy:"12", r:"10"}),
+        e("line",{ x1:"12", x2:"12", y1:"8", y2:"12"}),
+        e("line",{ x1:"12", x2:"12.01", y1:"16", y2:"16"}));
+
+const Loader2 = ({ className }) =>
+    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
+        e("path",{ d:"M21 12a9 9 0 1 1-6.219-8.56"}));
 
 /* ------------ MAIN COMPONENT ------------ */
 const SystemsAudit = () => {
     const [currentStep, setCurrentStep] = useState(-1);
+    const [answers, setAnswers] = useState({});
+    const [showResults, setShowResults] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState("");
+
+    const WEBHOOK_URL = "https://hook.eu2.make.com/431z6eu25lw47aybg7o3uts2uwq859ez";
+
+    const steps = [
+        { id: "name", category: "About You", icon: e(UserIcon,{className:"w-5 h-5 text-purple-400"}), description:"First, let’s get to know you.", type:"text", label:"What is your first name?", placeholder:"e.g., Marcus" },
+        { id: "email", category: "Contact Info", icon: e(Mail,{className:"w-5 h-5 text-purple-400"}), description:"Where should we send your results?", type:"email", label:"What is your work email?", placeholder:"name@company.com" },
+        { id: "visibility", category: "Visibility & Awareness", icon: e(Eye,{className:"w-5 h-5 text-purple-400"}), description:"How big of a challenge is market visibility?", type:"rating",
+          symptoms:["People don't find us easily","We aren’t active on social media or even online","Our website doesn’t bring in enough inquiries","People don’t clearly understand what we offer"] },
+        { id: "inquiries", category: "Inquiries & New Clients", icon: e(MessageSquare,{className:"w-5 h-5 text-fuchsia-400"}), description:"How efficient is your lead handling?", type:"rating",
+          symptoms:["We respond manually to every inquiry","We follow up late","We spend too long sending info","Potential clients lose interest and move on"] },
+        { id: "operations", category: "Operations & Manual Work", icon: e(Settings,{className:"w-5 h-5 text-blue-400"}), description:"Is manual work slowing you down?", type:"rating",
+          symptoms:["Too much repetitive work","Tools don’t work well together","Me/ my team handles all tasks manually","Too many steps dependent on the owner"] },
+        { id: "experience", category: "Client Experience", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"Is your client servicing easy & smooth?", type:"rating",
+          symptoms:["No consistent onboarding","We forget to collect reviews","Communication feels scattered","No project management tool"] },
+        { id: "time", category: "Time & Capacity", icon: e(Clock,{className:"w-5 h-5 text-orange-400"}), description:"Do you spend time on high-value work?", type:"rating",
+          symptoms:["Business relies too much on founder","Team works many hours on low-value tasks","We need more capacity without hiring more","Struggle balancing delivery & growth"] },
+        { id: "ai", category: "AI Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How would you describe your current use of AI in your business?", type:"rating",
+          symptoms:["I/we don’t use AI at all yet","I/we have tried AI, but the outputs feel generic or not useful","I/we use AI occasionally, but not with a clear system","I/we use AI regularly, but it doesn’t save real time","AI is part of my/our system and helps us work faster"] },
+        { id: "automation", category: "Automation Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How would you describe your current level of automation across your business?", type:"rating",
+          symptoms:["I/we don’t use any automation yet","I/we automate a few things, but most tasks are still manual","I/we have some automations, but they break or feel disconnected","I/we have good automations, but want to streamline more","Our systems are well-automated and save us real time"] },
+        { id: "priority", category: "Bonus: Top Priority", icon: e(Star,{className:"w-5 h-5 text-yellow-400"}), description:"What would you love to improve first?", type:"single",
+          options:["Getting more visibility","Getting more clients","Reducing manual work","Improving client experience","Freeing up time"] },
+    ];
+
+    const handleInputChange = (ev) => {
+        const value = ev.target.value;
+        setAnswers((prev)=>({...prev,[steps[currentStep].id]:value}));
+        if(value && error) setError("");
+    };
+
+    const handleRating = (val) => {
+        setAnswers((prev)=>({...prev,[steps[currentStep].id]:val}));
+        setError("");
+    };
+
+    const handleSingleSelect = (option) => {
+        setAnswers((prev)=>({...prev,[steps[currentStep].id]:[option]}));
+        setError("");
+    };
+
+    const validateStep = () => {
+        const step = steps[currentStep];
+        const ans = answers[step.id];
+
+        if(["text","email"].includes(step.type)) {
+            if(!ans || ans.trim()==="") { setError("This field is required"); return false; }
+            if(step.type==="email" && !/\S+@\S+\.\S+/.test(ans)) { setError("Please enter a valid email"); return false; }
+        }
+
+        if(step.type==="rating" && !ans) { setError("Please select a rating"); return false; }
+        if(step.type==="single" && (!ans || ans.length===0)) { setError("Please select an option"); return false; }
+
+        return true;
+    };
+
+    const calculateScore = () => {
+        let total = 0;
+        steps.filter(s=>s.type==="rating").forEach(s=>{
+            if(answers[s.id]) total += parseInt(answers[s.id],10);
+        });
+        return total;
+    };
+
+    const submitAudit = async () => {
+        setIsSubmitting(true);
+        const score = calculateScore();
+
+        const payload = {
+            name: answers.name,
+            email: answers.email,
+            score,
+            priority: answers.priority ? answers.priority[0] : "",
+            visibility_rating: answers.visibility,
+            inquiries_rating: answers.inquiries,
+            operations_rating: answers.operations,
+            experience_rating: answers.experience,
+            time_rating: answers.time,
+            ai_rating: answers.ai,
+            automation_rating: answers.automation,
+            submittedAt: new Date().toISOString(),
+            source: "Systems Audit App",
+        };
+
+        try {
+            await fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        } catch (err) {
+            console.warn("Webhook error:", err);
+        }
+
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setShowResults(true);
+            window.scrollTo(0,0);
+        }, 1500);
+    };
+
+    const handleNext = () => {
+        if (!validateStep()) return;
+        setError("");
+
+        if (currentStep < steps.length - 1) {
+            setCurrentStep((c) => c + 1);
+            window.scrollTo(0, 0);
+        } else {
+            submitAudit();
+        }
+    };
+
+    const handleBack = () => {
+        setError("");
+        if (showResults) {
+            setShowResults(false);
+        } else if (currentStep > 0) {
+            setCurrentStep((c) => c - 1);
+        } else if (currentStep === 0) {
+            setCurrentStep(-1);
+        }
+    };
+
+    const handleKeyDown = (ev) => {
+        if (ev.key === "Enter") handleNext();
+    };
 
     /* ------------------------------------------------
        INTRO SCREEN
     ------------------------------------------------ */
-    if (currentStep === -1) {
+    if (currentStep === -1 && !showResults) {
         return e(
             "div",
             { className: "min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 font-sans text-slate-200" },
@@ -76,40 +271,24 @@ const SystemsAudit = () => {
                 e(
                     "div",
                     { className: "bg-gradient-to-br from-purple-900 via-slate-900 to-slate-900 p-10 text-white text-center relative overflow-hidden" },
-
                     e("div", {
                         className: "absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/20 blur-3xl rounded-full"
                     }),
-
                     e(BarChart3, { className: "w-20 h-20 mx-auto mb-6 text-purple-400 relative z-10" }),
+                    e("h1", { className: "text-4xl font-heading font-bold mb-4 relative z-10" }, "Systems Growth Audit"),
 
-                    e("h1", {
-                        className: "text-4xl font-heading font-bold mb-4 relative z-10"
-                    }, "Systems Growth Audit"),
-
-                    /* ---- TEXT BLOCK (SAFE WRAPPER) ---- */
+                    /* ✅ ONLY CHANGE: wrap the two lines safely */
                     e(
                         "div",
-                        { className: "relative z-10 space-y-4" },
-
+                        { className: "relative z-10" },
+                        e("p", { className: "text-slate-300 text-xl" }, "Identify the bottlenecks slowing down your scaling."),
                         e(
                             "p",
-                            { className: "text-slate-300 text-xl" },
-                            "Identify the bottlenecks slowing down your scaling."
-                        ),
-
-                        /* ✅ DISCLAIMER — ONLY ADDITION */
-                        e(
-                            "p",
-                            {
-                                className: "text-slate-400 italic max-w-lg mx-auto leading-relaxed",
-                                style: { fontSize: "9px" }
-                            },
+                            { className: "text-slate-400 italic mt-3 max-w-lg mx-auto leading-relaxed", style: { fontSize: "9px" } },
                             "By completing this audit, you give us permission to email you and send you your scores."
                         )
                     )
                 ),
-
                 e(
                     "div",
                     { className: "p-12 bg-slate-900" },
@@ -128,7 +307,352 @@ const SystemsAudit = () => {
         );
     }
 
-    return null;
+    /* ------------------------------------------------
+       LOADING SCREEN
+    ------------------------------------------------ */
+    if (isSubmitting) {
+        return e(
+            "div",
+            { className: "min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 font-sans" },
+            e(
+                "div",
+                {
+                    className:
+                        "bg-slate-900 p-12 rounded-2xl shadow-2xl shadow-purple-900/20 flex flex-col items-center text-center max-w-md w-full border border-slate-800"
+                },
+                e(Loader2, { className: "w-16 h-16 text-purple-500 animate-spin mb-6" }),
+                e("h2", { className: "text-2xl font-heading font-bold text-white mb-2" }, "Analyzing Results..."),
+                e("p", { className: "text-slate-400 text-lg" }, "Connecting to our systems and preparing your custom report...")
+            )
+        );
+    }
+
+    /* ------------------------------------------------
+       RESULTS SCREEN
+    ------------------------------------------------ */
+    if (showResults) {
+        const userName = answers.name || "there";
+        const userEmail = answers.email || "your inbox";
+
+        return e(
+            "div",
+            { className: "min-h-screen bg-slate-950 py-12 px-4 font-sans text-slate-200" },
+            e(
+                "div",
+                { className: "max-w-3xl mx-auto bg-slate-900 rounded-2xl shadow-2xl shadow-pink-900/20 overflow-hidden border border-slate-800" },
+                e(
+                    "div",
+                    { className: "bg-pink-700/50 p-10 text-white text-center relative overflow-hidden" },
+                    e("div", {
+                        className: "absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-pink-600/10 blur-3xl rounded-full"
+                    }),
+                    e(CheckCircle2, { className: "w-20 h-20 mx-auto mb-6 text-pink-300 relative z-10" }),
+                    e(
+                        "h2",
+                        { className: "text-4xl font-heading font-bold mb-4 relative z-10" },
+                        `Audit Complete, ${userName}!`
+                    ),
+                    e("p", { className: "text-xl text-pink-100 relative z-10" }, "We've received your responses.")
+                ),
+                e(
+                    "div",
+                    { className: "p-10 md:p-14" },
+                    e(
+                        "h3",
+                        { className: "text-3xl font-heading font-bold mb-6 text-white" },
+                        "Your Next Steps Have Been Sent."
+                    ),
+                    e(
+                        "div",
+                        { className: "bg-slate-800/50 p-8 rounded-xl border border-slate-700 space-y-4" },
+                        e(
+                            "div",
+                            { className: "flex items-center gap-3 text-xl font-medium text-slate-300" },
+                            e(Mail, { className: "w-8 h-8 text-purple-400 flex-shrink-0" }),
+                            e("span", null, "Your detailed audit has been emailed to:")
+                        ),
+                        e(
+                            "p",
+                            { className: "text-2xl font-heading font-bold text-purple-400 pl-11 break-all" },
+                            userEmail
+                        )
+                    ),
+                    e(
+                        "div",
+                        { className: "mt-8 p-6 bg-yellow-900/20 border border-yellow-800/50 rounded-lg text-yellow-400 flex items-start gap-3" },
+                        e(AlertCircle, { className: "w-6 h-6 mt-1 flex-shrink-0" }),
+                        e(
+                            "p",
+                            { className: "text-base" },
+                            "If you don't receive it within 5 minutes, check spam or junk email."
+                        )
+                    ),
+                    e(
+                        "div",
+                        { className: "mt-12 text-center" },
+                        e(
+                            "button",
+                            {
+                                onClick: () => window.location.reload(),
+                                className:
+                                    "text-slate-500 hover:text-white font-medium text-base underline transition-colors"
+                            },
+                            "Go back to start"
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    /* ------------------------------------------------
+       STEP CONTENT RENDERER
+    ------------------------------------------------ */
+    const renderStepContent = () => {
+        const step = steps[currentStep];
+
+        if (step.type === "text" || step.type === "email") {
+            return e(
+                "div",
+                { className: "max-w-md mx-auto py-8" },
+                e(
+                    "label",
+                    { className: "block text-slate-300 font-heading font-semibold mb-4 text-xl" },
+                    step.label
+                ),
+                e("input", {
+                    type: step.type,
+                    value: answers[step.id] || "",
+                    onChange: handleInputChange,
+                    onKeyDown: handleKeyDown,
+                    placeholder: step.placeholder,
+                    className:
+                        "w-full p-5 text-xl border-2 bg-slate-800 text-white placeholder-slate-500 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-900/50 transition-all " +
+                        (error ? "border-red-500" : "border-slate-700 focus:border-purple-500"),
+                    autoFocus: true
+                }),
+                error &&
+                    e(
+                        "p",
+                        { className: "text-red-400 mt-3 text-base flex items-center gap-2" },
+                        e(AlertCircle, { className: "w-5 h-5" }),
+                        error
+                    )
+            );
+        }
+
+        if (step.type === "rating") {
+            const currentRating = answers[step.id];
+
+            return e(
+                "div",
+                { className: "max-w-xl mx-auto" },
+                e(
+                    "div",
+                    { className: "bg-purple-900/10 p-8 rounded-xl mb-8 border border-purple-900/30" },
+                    e(
+                        "p",
+                        {
+                            className:
+                                "text-base font-heading font-bold text-purple-400 uppercase tracking-wide mb-4 flex items-center gap-2"
+                        },
+                        e(AlertCircle, { className: "w-5 h-5" }),
+                        "Common symptoms in this area:"
+                    ),
+                    e(
+                        "ul",
+                        { className: "space-y-3" },
+                        step.symptoms.map((s, i) =>
+                            e(
+                                "li",
+                                {
+                                    key: i,
+                                    className:
+                                        "flex items-start gap-3 text-slate-300 text-lg"
+                                },
+                                e("span", { className: "text-purple-500 mt-1.5" }, "•"),
+                                s
+                            )
+                        )
+                    )
+                ),
+
+                e(
+                    "div",
+                    { className: "text-center mb-4" },
+                    e(
+                        "span",
+                        { className: "text-xl font-heading font-bold text-white block mb-6" },
+                        "Rate the severity of this challenge:"
+                    )
+                ),
+
+                e(
+                    "div",
+                    { className: "flex justify-between items-center gap-3 mb-4" },
+                    [1, 2, 3, 4, 5].map((val) =>
+                        e(
+                            "button",
+                            {
+                                key: val,
+                                onClick: () => handleRating(val),
+                                className:
+                                    "w-16 h-16 sm:w-20 sm:h-20 rounded-xl text-2xl font-heading font-bold transition-all duration-200 border-2 shadow-sm " +
+                                    (currentRating === val
+                                        ? "bg-purple-600 text-white border-purple-500 scale-110 shadow-lg shadow-purple-900/50 ring-4 ring-purple-900/30"
+                                        : "bg-slate-800 text-slate-400 border-slate-700 hover:border-purple-500/50 hover:text-purple-400")
+                            },
+                            val
+                        )
+                    )
+                ),
+
+                e(
+                    "div",
+                    { className: "flex justify-between px-2 text-sm font-semibold text-slate-500 uppercase tracking-wide" },
+                    e("span", null, "No Challenge"),
+                    e("span", null, "Critical Issue")
+                ),
+
+                error &&
+                    e(
+                        "p",
+                        {
+                            className: "text-red-400 mt-6 text-center text-base flex items-center justify-center gap-2"
+                        },
+                        e(AlertCircle, { className: "w-5 h-5" }),
+                        error
+                    )
+            );
+        }
+
+        if (step.type === "single") {
+            return e(
+                "div",
+                { className: "space-y-4" },
+                step.options.map((option, idx) => {
+                    const selected = answers[step.id]?.includes(option);
+
+                    return e(
+                        "div",
+                        {
+                            key: idx,
+                            onClick: () => handleSingleSelect(option),
+                            className:
+                                "cursor-pointer p-6 rounded-xl border-2 transition-all duration-200 flex items-center gap-5 group " +
+                                (selected
+                                    ? "border-purple-500 bg-purple-900/20 shadow-sm"
+                                    : "border-slate-800 bg-slate-800 hover:border-purple-500/30 shadow-sm")
+                        },
+                        e(
+                            "div",
+                            {
+                                className:
+                                    "w-8 h-8 rounded-full flex items-center justify-center border transition-colors flex-shrink-0 " +
+                                    (selected
+                                        ? "bg-purple-600 border-purple-600"
+                                        : "bg-slate-900 border-slate-600 group-hover:border-purple-500")
+                            },
+                            selected && e(CheckCircle2, { className: "w-5 h-5 text-white" })
+                        ),
+                        e(
+                            "span",
+                            { className: "font-medium text-lg " + (selected ? "text-white" : "text-slate-300") },
+                            option
+                        )
+                    );
+                }),
+                error &&
+                    e(
+                        "p",
+                        { className: "text-red-400 mt-3 text-base flex items-center gap-2" },
+                        e(AlertCircle, { className: "w-5 h-5" }),
+                        error
+                    )
+            );
+        }
+
+        return null;
+    };
+
+    /* ------------------------------------------------
+       MAIN FORM LAYOUT
+    ------------------------------------------------ */
+    const step = steps[currentStep];
+    const progress = (currentStep / steps.length) * 100;
+
+    return e(
+        "div",
+        { className: "min-h-screen bg-slate-950 flex flex-col items-center py-10 px-4 font-sans text-slate-200" },
+        e(
+            "div",
+            { className: "w-full max-w-2xl mb-8" },
+            e(
+                "div",
+                { className: "flex justify-between text-sm text-slate-500 font-medium mb-2 uppercase tracking-wide" },
+                e("span", null, `Step ${currentStep + 1} of ${steps.length}`),
+                e("span", null, `${Math.round(progress)}% Complete`)
+            ),
+            e(
+                "div",
+                { className: "h-3 w-full bg-slate-800 rounded-full overflow-hidden" },
+                e("div", {
+                    className: "h-full bg-gradient-to-r from-purple-600 to-fuchsia-600 transition-all duration-500 ease-out",
+                    style: { width: `${((currentStep + 1) / steps.length) * 100}%` }
+                })
+            )
+        ),
+
+        e(
+            "div",
+            {
+                className:
+                    "w-full max-w-2xl bg-slate-900 rounded-2xl shadow-2xl shadow-purple-900/10 overflow-hidden flex flex-col border border-slate-800"
+            },
+            e(
+                "div",
+                { className: "p-10 border-b border-slate-800" },
+                e(
+                    "div",
+                    { className: "flex items-center gap-5 mb-3" },
+                    e(
+                        "div",
+                        { className: "p-4 bg-slate-800 rounded-xl border border-slate-700" },
+                        e(step.icon.type, { className: "w-8 h-8 " + (step.icon.props?.className || "") })
+                    ),
+                    e("h2", { className: "text-3xl font-heading font-bold text-white" }, step.category)
+                ),
+                e("p", { className: "text-slate-400 ml-20 text-lg" }, step.description)
+            ),
+
+            e("div", { className: "p-10 bg-slate-950/30 flex-grow" }, renderStepContent()),
+
+            e(
+                "div",
+                { className: "p-8 bg-slate-900 border-t border-slate-800 flex justify-between items-center" },
+                e(
+                    "button",
+                    {
+                        onClick: handleBack,
+                        className:
+                            "flex items-center gap-2 px-6 py-4 rounded-lg font-medium text-lg transition-colors text-slate-500 hover:bg-slate-800 hover:text-white"
+                    },
+                    e(ArrowLeft, { className: "w-5 h-5" }),
+                    "Back"
+                ),
+                e(
+                    "button",
+                    {
+                        onClick: handleNext,
+                        className:
+                            "bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-4 px-10 text-lg rounded-lg transition-all shadow-lg shadow-purple-900/30 flex items-center gap-3"
+                    },
+                    currentStep === steps.length - 1 ? "Finish Audit" : "Next Step",
+                    currentStep !== steps.length - 1 && e(ChevronRight, { className: "w-5 h-5" })
+                )
+            )
+        )
+    );
 };
 
 /* ------------------------------------------------
