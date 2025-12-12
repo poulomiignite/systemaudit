@@ -278,8 +278,19 @@ const SystemsAudit = () => {
                     }),
                     e(BarChart3, { className: "w-20 h-20 mx-auto mb-6 text-purple-400 relative z-10" }),
                     e("h1", { className: "text-4xl font-heading font-bold mb-4 relative z-10" }, "Systems Growth Audit"),
-                    e("p", { className: "text-slate-300 text-xl relative z-10" }, "Identify the bottlenecks slowing down your scaling.")
-                ),
+                    e("p", { className: "text-slate-300 text-xl relative z-10" },
+  "Identify the bottlenecks slowing down your scaling."
+),
+
+e(
+  "p",
+  {
+    className:
+      "text-slate-400 text-sm mt-4 max-w-lg mx-auto leading-relaxed relative z-10"
+  },
+  "By completing this audit, you give us permission to email you and send you your scores."
+),
+
                 e(
                     "div",
                     { className: "p-12 bg-slate-900" },
@@ -660,6 +671,7 @@ window.addEventListener("load", () => {
 
 </body>
 </html>
+
 
 
 
