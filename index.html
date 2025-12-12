@@ -139,14 +139,14 @@ const SystemsAudit = () => {
           symptoms:["We respond manually to every inquiry","We follow up late","We spend too long sending info","Potential clients lose interest and move on"] },
         { id: "operations", category: "Operations & Manual Work", icon: e(Settings,{className:"w-5 h-5 text-blue-400"}), description:"Is manual work slowing you down?", type:"rating",
           symptoms:["Too much repetitive work","Tools don’t work well together","Me/ my team handles all tasks manually","Too many steps dependent on the owner"] },
-        { id: "experience", category: "Client Experience", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"Is your client journey consistent?", type:"rating",
+        { id: "experience", category: "Client Experience", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"Is your client servicing easy & smooth?", type:"rating",
           symptoms:["No consistent onboarding","We forget to collect reviews","Communication feels scattered","No project management tool"] },
         { id: "time", category: "Time & Capacity", icon: e(Clock,{className:"w-5 h-5 text-orange-400"}), description:"Do you spend time on high-value work?", type:"rating",
           symptoms:["Business relies too much on founder","Team works many hours on low-value tasks","We need more capacity without hiring more","Struggle balancing delivery & growth"] },
-         { id: "ai", category: "AI Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"Is your client journey consistent?", type:"rating",
+         { id: "ai", category: "AI Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How would you describe your current use of AI in your business?", type:"rating",
           symptoms:["I/we don’t use AI at all yet","I/we have tried AI, but the outputs feel generic or not useful","I/we use AI occasionally, but not with a clear system","I/we use AI regularly, but it doesn’t save real time",
         "AI is part of my/our system and helps us work faster"] },
-         { id: "automation", category: "Automation Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"Is your client journey consistent?", type:"rating",
+         { id: "automation", category: "Automation Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How would you describe your current level of automation across your business?", type:"rating",
           symptoms:["I/we don’t use any automation yet","I/we automate a few things, but most tasks are still manual","I/we have some automations, but they break or feel disconnected","I/we have good automations, but want to streamline more","Our systems are well-automated and save us real time"] },
         { id: "priority", category: "Bonus: Top Priority", icon: e(Star,{className:"w-5 h-5 text-yellow-400"}), description:"What would you love to improve first?", type:"single",
           options:["Getting more visibility","Getting more clients","Reducing manual work","Improving client experience","Freeing up time"] },
@@ -658,5 +658,6 @@ window.addEventListener("load", () => {
 
 </body>
 </html>
+
 
 
