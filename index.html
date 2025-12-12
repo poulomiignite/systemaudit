@@ -607,7 +607,7 @@ const SystemsAudit = () => {
                     e(
                         "div",
                         { className: "p-4 bg-slate-800 rounded-xl border border-slate-700" },
-                        e(step.icon.type, { className: "w-8 h-8 " + step.icon.props.className.split(" ").pop() })
+                        e(step.icon.type, { className: "w-8 h-8 " + (step.icon.props?.className || "") })
                     ),
                     e("h2", { className: "text-3xl font-heading font-bold text-white" }, step.category)
                 ),
@@ -658,4 +658,5 @@ window.addEventListener("load", () => {
 
 </body>
 </html>
+
 
