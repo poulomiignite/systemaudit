@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Growth System Score</title>
+    <title>Growth Systems Score</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -134,22 +134,22 @@ const SystemsAudit = () => {
     const steps = [
         { id: "name", category: "About You", icon: e(UserIcon,{className:"w-5 h-5 text-purple-400"}), description:"First, let’s get to know you.", type:"text", label:"What is your first name?", placeholder:"e.g., Marcus" },
         { id: "email", category: "Contact Info", icon: e(Mail,{className:"w-5 h-5 text-purple-400"}), description:"Where should we send your results?", type:"email", label:"What is your work email?", placeholder:"name@company.com" },
-        { id: "visibility", category: "Visibility & Awareness", icon: e(Eye,{className:"w-5 h-5 text-purple-400"}), description:"How big of a challenge is market visibility?", type:"rating",
-          symptoms:["People don't find us easily","We aren’t active on social media or even online","Our website doesn’t bring in enough inquiries","People don’t clearly understand what we offer"] },
-        { id: "inquiries", category: "Inquiries & New Clients", icon: e(MessageSquare,{className:"w-5 h-5 text-fuchsia-400"}), description:"How efficient is your lead handling?", type:"rating",
-          symptoms:["We respond manually to every inquiry","We follow up late","We spend too long sending info","Potential clients lose interest and move on"] },
-        { id: "operations", category: "Operations & Manual Work", icon: e(Settings,{className:"w-5 h-5 text-blue-400"}), description:"Is manual work slowing you down?", type:"rating",
-          symptoms:["Too much repetitive work","Tools don’t work well together","Me/ my team handles all tasks manually","Too many steps dependent on the owner"] },
-        { id: "experience", category: "Client Experience", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"Is your client servicing easy & smooth?", type:"rating",
-          symptoms:["No consistent onboarding","We forget to collect reviews","Communication feels scattered","No project management tool"] },
-        { id: "time", category: "Time & Capacity", icon: e(Clock,{className:"w-5 h-5 text-orange-400"}), description:"Do you spend time on high-value work?", type:"rating",
-          symptoms:["Business relies too much on founder","Team works many hours on low-value tasks","We need more capacity without hiring more","Struggle balancing delivery & growth"] },
-        { id: "ai", category: "AI Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How would you describe your current use of AI in your business?", type:"rating",
-          symptoms:["I/we don’t use AI at all yet","I/we have tried AI, but the outputs feel generic or not useful","I/we use AI occasionally, but not with a clear system","I/we use AI regularly, but it doesn’t save real time","AI is part of my/our system and helps us work faster"] },
-        { id: "automation", category: "Automation Systems", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How would you describe your current level of automation across your business?", type:"rating",
-          symptoms:["I/we don’t use any automation yet","I/we automate a few things, but most tasks are still manual","I/we have some automations, but they break or feel disconnected","I/we have good automations, but want to streamline more","Our systems are well-automated and save us real time"] },
+        { id: "visibility", category: "Content & Visibility", icon: e(Eye,{className:"w-5 h-5 text-purple-400"}), description:"How efficient is your content production?", type:"rating",
+          symptoms:["Creating content takes too long or doesn’t happen consistently","We don’t repurpose \u2014 one piece stays on one platform","There’s no content calendar or system for planning","The founder is the only one who can create content"] },
+        { id: "inquiries", category: "Lead Response & Follow-up", icon: e(MessageSquare,{className:"w-5 h-5 text-fuchsia-400"}), description:"How fast and consistent is your lead handling?", type:"rating",
+          symptoms:["We respond to inquiries manually, sometimes hours or days later","There’s no follow-up system \u2014 it depends on who remembers","We lose track of where leads are in the pipeline","Proposals and quotes take too long to put together"] },
+        { id: "operations", category: "Operations & Workflows", icon: e(Settings,{className:"w-5 h-5 text-blue-400"}), description:"How connected and efficient are your processes?", type:"rating",
+          symptoms:["Same information gets entered in multiple places","There are no SOPs \u2014 processes live in people’s heads","Tools don’t connect \u2014 we copy-paste between them","If someone is out, their work just stops"] },
+        { id: "experience", category: "Client Delivery & Experience", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How smooth and consistent is your client journey?", type:"rating",
+          symptoms:["Onboarding is different every time","Clients chase us for updates instead of getting them automatically","We forget to ask for reviews or referrals","Handoffs between team members drop things"] },
+        { id: "time", category: "Time & Founder Dependency", icon: e(Clock,{className:"w-5 h-5 text-orange-400"}), description:"Is the founder the bottleneck?", type:"rating",
+          symptoms:["The founder approves or touches almost everything","We can’t take on more clients without burning out","The team spends most of their time on delivery, not growth","We’d need to hire to grow, but margins are tight"] },
+        { id: "ai", category: "AI Readiness", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How is AI used in your business today?", type:"rating",
+          symptoms:["We use ChatGPT for quick answers but nothing structured","AI outputs don’t match our voice or business context","We know AI could help but don’t know where to start","Nobody on the team uses AI as part of their daily workflow"] },
+        { id: "automation", category: "Systems & Automation", icon: e(Settings,{className:"w-5 h-5 text-blue-400"}), description:"How automated are your daily workflows?", type:"rating",
+          symptoms:["Most handoffs between steps are manual","We have some automations but they break or need babysitting","Reporting and tracking is done in spreadsheets manually","Repetitive admin tasks eat hours every week"] },
         { id: "priority", category: "Bonus: Top Priority", icon: e(Star,{className:"w-5 h-5 text-yellow-400"}), description:"What would you love to improve first?", type:"single",
-          options:["Getting More Visibility","Getting More Clients","Reducing Manual Work and Hours","Improving Client Experience","Standing Out as a Unique Brand","Creating Authentic Content Regularly In Less Time"] },
+          options:["Creating Content Consistently in Less Time","Responding to Leads Faster","Reducing Manual Work and Hours","Improving Client Experience","Freeing Up the Founder’s Time","Setting Up AI & Automation Systems"] },
     ];
 
     const handleInputChange = (ev) => {
@@ -208,11 +208,14 @@ const SystemsAudit = () => {
             ai_rating: answers.ai,
             automation_rating: answers.automation,
             submittedAt: new Date().toISOString(),
-            source: "Systems Audit App",
+            source: "Growth Systems Score",
         };
 
+        const minDelay = new Promise(r => setTimeout(r, 1500));
+
+        let webhookOk = false;
         try {
-            await fetch(WEBHOOK_URL, {
+            const res = await fetch(WEBHOOK_URL, {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -220,15 +223,31 @@ const SystemsAudit = () => {
                 },
                 body: JSON.stringify(payload)
             });
+            webhookOk = res.ok;
+            if (!res.ok) console.warn("Webhook returned status:", res.status);
         } catch (err) {
             console.warn("Webhook error:", err);
         }
 
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setShowResults(true);
-            window.scrollTo(0,0);
-        }, 1500);
+        if (!webhookOk) {
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.warn("Webhook retry failed:", err);
+            }
+        }
+
+        await minDelay;
+        setIsSubmitting(false);
+        setShowResults(true);
+        window.scrollTo(0,0);
     };
 
     const handleNext = () => {
@@ -275,17 +294,16 @@ const SystemsAudit = () => {
                         className: "absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/20 blur-3xl rounded-full"
                     }),
                     e(BarChart3, { className: "w-20 h-20 mx-auto mb-6 text-purple-400 relative z-10" }),
-                    e("h1", { className: "text-4xl font-heading font-bold mb-4 relative z-10" }, "Growth System Score"),
+                    e("h1", { className: "text-4xl font-heading font-bold mb-4 relative z-10" }, "Growth Systems Score"),
 
-                    /* ✅ ONLY CHANGE: wrap the two lines safely */
                     e(
                         "div",
                         { className: "relative z-10" },
-                        e("p", { className: "text-slate-300 text-xl" }, "Identify the bottlenecks slowing down your scaling."),
+                        e("p", { className: "text-slate-300 text-xl" }, "See how ready your business is to scale \u2014 without adding more hours or people."),
                         e(
                             "p",
                             { className: "text-slate-400 italic mt-3 max-w-lg mx-auto leading-relaxed", style: { fontSize: "9px" } },
-                            "By completing this audit, you give us permission to email you and send you your scores."
+                            "By completing this score, you give us permission to email you and send you your results."
                         )
                     )
                 ),
@@ -299,7 +317,7 @@ const SystemsAudit = () => {
                             className:
                                 "w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-5 px-8 text-xl rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg shadow-purple-900/20 transform hover:-translate-y-0.5"
                         },
-                        "Start Audit ",
+                        "Get Your Score ",
                         e(ArrowRight, { className: "w-6 h-6" })
                     )
                 )
@@ -322,7 +340,7 @@ const SystemsAudit = () => {
                 },
                 e(Loader2, { className: "w-16 h-16 text-purple-500 animate-spin mb-6" }),
                 e("h2", { className: "text-2xl font-heading font-bold text-white mb-2" }, "Analyzing Results..."),
-                e("p", { className: "text-slate-400 text-lg" }, "Connecting to our systems and preparing your custom report...")
+                e("p", { className: "text-slate-400 text-lg" }, "Calculating your Growth Systems Score...")
             )
         );
     }
@@ -350,7 +368,7 @@ const SystemsAudit = () => {
                     e(
                         "h2",
                         { className: "text-4xl font-heading font-bold mb-4 relative z-10" },
-                        `Audit Complete, ${userName}!`
+                        `Score Complete, ${userName}!`
                     ),
                     e("p", { className: "text-xl text-pink-100 relative z-10" }, "We've received your responses.")
                 ),
@@ -369,7 +387,7 @@ const SystemsAudit = () => {
                             "div",
                             { className: "flex items-center gap-3 text-xl font-medium text-slate-300" },
                             e(Mail, { className: "w-8 h-8 text-purple-400 flex-shrink-0" }),
-                            e("span", null, "Your detailed audit has been emailed to:")
+                            e("span", null, "Your Growth Systems Score has been emailed to:")
                         ),
                         e(
                             "p",
@@ -647,7 +665,7 @@ const SystemsAudit = () => {
                         className:
                             "bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-4 px-10 text-lg rounded-lg transition-all shadow-lg shadow-purple-900/30 flex items-center gap-3"
                     },
-                    currentStep === steps.length - 1 ? "Finish Audit" : "Next Step",
+                    currentStep === steps.length - 1 ? "Get My Score" : "Next Step",
                     currentStep !== steps.length - 1 && e(ChevronRight, { className: "w-5 h-5" })
                 )
             )
