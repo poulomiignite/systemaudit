@@ -1,699 +1,566 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Growth Systems Score</title>
-
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- React 18 UMD -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-    <!-- Tailwind config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ["Open Sans", "sans-serif"],
-                        heading: ["Outfit", "sans-serif"],
-                    },
-                },
-            },
-        };
-    </script>
-
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Outfit:wght@500;700&display=swap');
-
-        #root-systems-audit {
-            all: unset;
-            display: block;
-            width: 100%;
-            min-height: 100vh;
-        }
-        body {
-            background-color: #020617;
-            margin: 0;
-            font-family: 'Open Sans', sans-serif;
-            color: #e2e8f0;
-        }
+        body { font-family: 'Open Sans', sans-serif; background-color: #020617; color: #f1f5f9; margin: 0; padding: 0; }
+        .font-heading { font-family: 'Outfit', sans-serif; }
+        .selection-purple::selection { background-color: #a855f7; color: white; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
     </style>
 </head>
+<body class="selection-purple">
+    <div id="root"></div>
 
-<body class="p-0 m-0 bg-slate-950">
-<div id="root-systems-audit"></div>
+    <script type="text/babel">
+        const { useState } = React;
 
-<script>
-const { useState, createElement: e } = React;
+        const WEBHOOK_URL = "https://hook.eu2.make.com/cody6qjwi2jm7aiamtkjlcu2ow09idbs";
 
-/* ------------ ICONS ------------ */
-const ArrowRight = ({ className }) =>
-    e("svg", { className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
-        e("path",{ d:"M5 12h14"}), e("path",{ d:"m12 5 7 7-7 7"}));
-
-const ArrowLeft = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
-        e("path",{ d:"m12 19-7-7 7-7"}), e("path",{ d:"M19 12H5"}));
-
-const CheckCircle2 = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round"},
-        e("circle",{ cx:"12", cy:"12", r:"10"}), e("path",{ d:"m9 12 2 2 4-4"}));
-
-const BarChart3 = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"M3 3v18h18"}), e("path",{ d:"M18 17V9"}), e("path",{ d:"M13 17v-4"}), e("path",{ d:"M8 17V5"}));
-
-const Eye = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"}),
-        e("circle",{ cx:"12", cy:"12", r:"3"}));
-
-const MessageSquare = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"}));
-
-const Settings = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"M12.22 2h-.44a2 2 0 0 0-2 2v.44a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v.44a2 2 0 0 1-2 2h.44a2 2 0 0 0 2 2v.44a2 2 0 0 1 2 2v.44a2 2 0 0 0 2 2v.44a2 2 0 0 1 2 2h.44a2 2 0 0 0 2-2v-.44a2 2 0 0 1 2-2h.44a2 2 0 0 0 2-2v-.44a2 2 0 0 1 2-2h.44a2 2 0 0 0 2-2v-.44a2 2 0 0 1-2-2h-.44a2 2 0 0 0-2-2v-.44a2 2 0 0 1-2-2h-.44a2 2 0 0 0-2-2z"}),
-        e("circle",{ cx:"12", cy:"12", r:"3"}));
-
-const Users = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"}),
-        e("circle",{ cx:"9", cy:"7", r:"4"}),
-        e("path",{ d:"M22 21v-2a4 4 0 0 0-3-3.87"}),
-        e("path",{ d:"M16 3.13a4 4 0 0 1 0 7.75"}));
-
-const Clock = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("circle",{ cx:"12", cy:"12", r:"10"}),
-        e("polyline",{ points:"12 6 12 12 16 14"}));
-
-const Star = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("polygon",{ points:"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"}));
-
-const ChevronRight = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"m9 18 6-6-6-6"}));
-
-const UserIcon = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"}),
-        e("circle",{ cx:"12", cy:"7", r:"4"}));
-
-const Mail = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("rect",{ width:"20", height:"16", x:"2", y:"4", rx:"2"}),
-        e("path",{ d:"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"}));
-
-const AlertCircle = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("circle",{ cx:"12", cy:"12", r:"10"}),
-        e("line",{ x1:"12", x2:"12", y1:"8", y2:"12"}),
-        e("line",{ x1:"12", x2:"12.01", y1:"16", y2:"16"}));
-
-const Loader2 = ({ className }) =>
-    e("svg",{ className, xmlns:"http://www.w3.org/2000/svg", width:"24", height:"24", fill:"none", stroke:"currentColor", strokeWidth:"2"},
-        e("path",{ d:"M21 12a9 9 0 1 1-6.219-8.56"}));
-
-/* ------------ MAIN COMPONENT ------------ */
-const SystemsAudit = () => {
-    const [currentStep, setCurrentStep] = useState(-1);
-    const [answers, setAnswers] = useState({});
-    const [showResults, setShowResults] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState("");
-
-    const WEBHOOK_URL = "https://hook.eu2.make.com/431z6eu25lw47aybg7o3uts2uwq859ez";
-
-    const steps = [
-        { id: "name", category: "About You", icon: e(UserIcon,{className:"w-5 h-5 text-purple-400"}), description:"First, let’s get to know you.", type:"text", label:"What is your first name?", placeholder:"e.g., Marcus" },
-        { id: "email", category: "Contact Info", icon: e(Mail,{className:"w-5 h-5 text-purple-400"}), description:"Where should we send your results?", type:"email", label:"What is your work email?", placeholder:"name@company.com" },
-        { id: "strategy", category: "Clarity & Strategy", icon: e(Eye,{className:"w-5 h-5 text-purple-400"}), description:"How clear and data-driven are your business decisions?", type:"rating",
-          symptoms:["Big decisions are based on gut feel, not data","We don’t track competitor moves or industry trends","Our positioning isn’t clear \u2014 we struggle to explain what makes us different","Strategy lives in the founder’s head, not written down anywhere"] },
-        { id: "content", category: "Content & Visibility", icon: e(BarChart3,{className:"w-5 h-5 text-fuchsia-400"}), description:"How consistent and efficient is your content and visibility?", type:"rating",
-          symptoms:["Creating content takes too long or doesn’t happen consistently","We don’t repurpose \u2014 one piece stays on one platform","There’s no content calendar or system for planning","The founder is the only one who can create content"] },
-        { id: "sales", category: "Sales & Pipeline", icon: e(MessageSquare,{className:"w-5 h-5 text-blue-400"}), description:"How systematic is your sales process from lead to close?", type:"rating",
-          symptoms:["We respond to inquiries manually, sometimes hours or days later","There’s no follow-up system \u2014 it depends on who remembers","We lose track of where leads are in the pipeline","Proposals and quotes take too long to put together"] },
-        { id: "admin", category: "Admin & Manual Work", icon: e(Settings,{className:"w-5 h-5 text-orange-400"}), description:"How much time goes to repetitive tasks and busywork?", type:"rating",
-          symptoms:["Same information gets entered in multiple places","There are no SOPs \u2014 processes live in people’s heads","Tools don’t connect \u2014 we copy-paste between them","Repetitive admin tasks eat hours every week"] },
-        { id: "clients", category: "Client Management", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How smooth and consistent is your client experience?", type:"rating",
-          symptoms:["Onboarding is different every time","Clients chase us for updates instead of getting them automatically","We forget to ask for reviews or referrals","Handoffs between team members drop things"] },
-        { id: "tools", category: "Custom Tools", icon: e(Star,{className:"w-5 h-5 text-yellow-400"}), description:"How well have you turned your expertise into reusable assets?", type:"rating",
-          symptoms:["Our expertise lives in the founder’s head, not captured anywhere","We recreate proposals, frameworks, and templates from scratch each time","There are no calculators, checklists, or tools clients can self-serve","We don’t have documented IP that works without us being present"] },
-        { id: "ai", category: "AI Readiness", icon: e(Users,{className:"w-5 h-5 text-pink-400"}), description:"How is AI used in your business today?", type:"rating",
-          symptoms:["We use ChatGPT for quick answers but nothing structured","AI outputs don’t match our voice or business context","We know AI could help but don’t know where to start","Nobody on the team uses AI as part of their daily workflow"] },
-        { id: "automation", category: "Systems & Automation", icon: e(Settings,{className:"w-5 h-5 text-blue-400"}), description:"How automated are your daily workflows?", type:"rating",
-          symptoms:["Most handoffs between steps are manual","We have some automations but they break or need babysitting","Reporting and tracking is done in spreadsheets manually","Repetitive admin tasks eat hours every week"] },
-        { id: "priority", category: "Top Priority", icon: e(Star,{className:"w-5 h-5 text-yellow-400"}), description:"Which area would you love to improve first?", type:"single",
-          options:["Clarity & Strategy","Consistent Online Visibility","Getting and Managing Leads","Managing Clients Easily","Reducing Admin Work","Creating Tools with Own IP & Expertise"] },
-    ];
-
-    const handleInputChange = (ev) => {
-        const value = ev.target.value;
-        setAnswers((prev)=>({...prev,[steps[currentStep].id]:value}));
-        if(value && error) setError("");
-    };
-
-    const handleRating = (val) => {
-        setAnswers((prev)=>({...prev,[steps[currentStep].id]:val}));
-        setError("");
-    };
-
-    const handleSingleSelect = (option) => {
-        setAnswers((prev)=>({...prev,[steps[currentStep].id]:[option]}));
-        setError("");
-    };
-
-    const validateStep = () => {
-        const step = steps[currentStep];
-        const ans = answers[step.id];
-
-        if(["text","email"].includes(step.type)) {
-            if(!ans || ans.trim()==="") { setError("This field is required"); return false; }
-            if(step.type==="email" && !/\S+@\S+\.\S+/.test(ans)) { setError("Please enter a valid email"); return false; }
-        }
-
-        if(step.type==="rating" && !ans) { setError("Please select a rating"); return false; }
-        if(step.type==="single" && (!ans || ans.length===0)) { setError("Please select an option"); return false; }
-
-        return true;
-    };
-
-    const calculateScore = () => {
-        let total = 0;
-        steps.filter(s=>s.type==="rating").forEach(s=>{
-            if(answers[s.id]) total += parseInt(answers[s.id],10);
-        });
-        return total;
-    };
-
-    const submitAudit = async () => {
-        setIsSubmitting(true);
-        const score = calculateScore();
-
-        const payload = {
-            name: answers.name,
-            email: answers.email,
-            score,
-            priority: answers.priority ? answers.priority[0] : "",
-            strategy_rating: answers.strategy,
-            content_rating: answers.content,
-            sales_rating: answers.sales,
-            admin_rating: answers.admin,
-            clients_rating: answers.clients,
-            tools_rating: answers.tools,
-            ai_rating: answers.ai,
-            automation_rating: answers.automation,
-            submittedAt: new Date().toISOString(),
-            source: "Growth Systems Score",
+        // --- SVG ICONS ---
+        const Icons = {
+            Target: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+            Megaphone: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>,
+            Zap: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+            Sparkles: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>,
+            Layers: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m12.83 2.18-8.58 3.9a2 2 0 0 0 0 3.66l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a2 2 0 0 0 0-3.66l-8.58-3.9a2 2 0 0 0-1.66 0z"/><path d="m2.6 10.15 8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9"/></svg>,
+            Lightbulb: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>,
+            ArrowRight: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>,
+            ArrowLeft: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>,
+            Loader: () => <svg className="w-12 h-12 text-purple-500 animate-spin" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>,
+            CheckCircle: () => <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>,
+            Mail: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
+            Clock: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+            AlertCircle: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>,
+            BarChart: () => <svg className="w-16 h-16 text-purple-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17v-4"/><path d="M8 17V5"/></svg>,
+            User: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         };
 
-        const minDelay = new Promise(r => setTimeout(r, 1500));
-
-        let webhookOk = false;
-        try {
-            const res = await fetch(WEBHOOK_URL, {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
-            webhookOk = res.ok;
-            if (!res.ok) console.warn("Webhook returned status:", res.status);
-        } catch (err) {
-            console.warn("Webhook error:", err);
-        }
-
-        if (!webhookOk) {
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                });
-            } catch (err) {
-                console.warn("Webhook retry failed:", err);
-            }
-        }
-
-        await minDelay;
-        setIsSubmitting(false);
-        setShowResults(true);
-        window.scrollTo(0,0);
-    };
-
-    const handleNext = () => {
-        if (!validateStep()) return;
-        setError("");
-
-        if (currentStep < steps.length - 1) {
-            setCurrentStep((c) => c + 1);
-            window.scrollTo(0, 0);
-        } else {
-            submitAudit();
-        }
-    };
-
-    const handleBack = () => {
-        setError("");
-        if (showResults) {
-            setShowResults(false);
-        } else if (currentStep > 0) {
-            setCurrentStep((c) => c - 1);
-        } else if (currentStep === 0) {
-            setCurrentStep(-1);
-        }
-    };
-
-    const handleKeyDown = (ev) => {
-        if (ev.key === "Enter") handleNext();
-    };
-
-    /* ------------------------------------------------
-       INTRO SCREEN
-    ------------------------------------------------ */
-    if (currentStep === -1 && !showResults) {
-        return e(
-            "div",
-            { className: "min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 font-sans text-slate-200" },
-            e(
-                "div",
-                { className: "max-w-2xl w-full bg-slate-900 rounded-2xl shadow-2xl shadow-purple-900/20 overflow-hidden border border-slate-800" },
-                e(
-                    "div",
-                    { className: "bg-gradient-to-br from-purple-900 via-slate-900 to-slate-900 p-10 text-white text-center relative overflow-hidden" },
-                    e("div", {
-                        className: "absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/20 blur-3xl rounded-full"
-                    }),
-                    e(BarChart3, { className: "w-20 h-20 mx-auto mb-6 text-purple-400 relative z-10" }),
-                    e("h1", { className: "text-4xl font-heading font-bold mb-4 relative z-10" }, "Growth Systems Score"),
-
-                    e(
-                        "div",
-                        { className: "relative z-10" },
-                        e("p", { className: "text-slate-300 text-xl" }, "See how ready your business is to scale \u2014 without adding more hours or people."),
-                        e(
-                            "p",
-                            { className: "text-slate-400 italic mt-3 max-w-lg mx-auto leading-relaxed", style: { fontSize: "9px" } },
-                            "By completing this score, you give us permission to email you and send you your results."
-                        )
-                    )
-                ),
-                e(
-                    "div",
-                    { className: "p-12 bg-slate-900" },
-                    e(
-                        "button",
-                        {
-                            onClick: () => setCurrentStep(0),
-                            className:
-                                "w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-5 px-8 text-xl rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg shadow-purple-900/20 transform hover:-translate-y-0.5"
-                        },
-                        "Get Your Score ",
-                        e(ArrowRight, { className: "w-6 h-6" })
-                    )
-                )
-            )
-        );
-    }
-
-    /* ------------------------------------------------
-       LOADING SCREEN
-    ------------------------------------------------ */
-    if (isSubmitting) {
-        return e(
-            "div",
-            { className: "min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 font-sans" },
-            e(
-                "div",
-                {
-                    className:
-                        "bg-slate-900 p-12 rounded-2xl shadow-2xl shadow-purple-900/20 flex flex-col items-center text-center max-w-md w-full border border-slate-800"
-                },
-                e(Loader2, { className: "w-16 h-16 text-purple-500 animate-spin mb-6" }),
-                e("h2", { className: "text-2xl font-heading font-bold text-white mb-2" }, "Analyzing Results..."),
-                e("p", { className: "text-slate-400 text-lg" }, "Calculating your Growth Systems Score...")
-            )
-        );
-    }
-
-    /* ------------------------------------------------
-       RESULTS SCREEN
-    ------------------------------------------------ */
-    if (showResults) {
-        const userName = answers.name || "there";
-        const userEmail = answers.email || "your inbox";
-
-        return e(
-            "div",
-            { className: "min-h-screen bg-slate-950 py-12 px-4 font-sans text-slate-200" },
-            e(
-                "div",
-                { className: "max-w-3xl mx-auto bg-slate-900 rounded-2xl shadow-2xl shadow-pink-900/20 overflow-hidden border border-slate-800" },
-                e(
-                    "div",
-                    { className: "bg-pink-700/50 p-10 text-white text-center relative overflow-hidden" },
-                    e("div", {
-                        className: "absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-pink-600/10 blur-3xl rounded-full"
-                    }),
-                    e(CheckCircle2, { className: "w-20 h-20 mx-auto mb-6 text-pink-300 relative z-10" }),
-                    e(
-                        "h2",
-                        { className: "text-4xl font-heading font-bold mb-4 relative z-10" },
-                        `Score Complete, ${userName}!`
-                    ),
-                    e("p", { className: "text-xl text-pink-100 relative z-10" }, "We've received your responses.")
-                ),
-                e(
-                    "div",
-                    { className: "p-10 md:p-14" },
-                    e(
-                        "h3",
-                        { className: "text-3xl font-heading font-bold mb-6 text-white" },
-                        "Your Next Steps Have Been Sent."
-                    ),
-                    e(
-                        "div",
-                        { className: "bg-slate-800/50 p-8 rounded-xl border border-slate-700 space-y-4" },
-                        e(
-                            "div",
-                            { className: "flex items-center gap-3 text-xl font-medium text-slate-300" },
-                            e(Mail, { className: "w-8 h-8 text-purple-400 flex-shrink-0" }),
-                            e("span", null, "Your Growth Systems Score has been emailed to:")
-                        ),
-                        e(
-                            "p",
-                            { className: "text-2xl font-heading font-bold text-purple-400 pl-11 break-all" },
-                            userEmail
-                        )
-                    ),
-                    e(
-                        "div",
-                        { className: "mt-8 p-6 bg-yellow-900/20 border border-yellow-800/50 rounded-lg text-yellow-400 flex items-start gap-3" },
-                        e(AlertCircle, { className: "w-6 h-6 mt-1 flex-shrink-0" }),
-                        e(
-                            "p",
-                            { className: "text-base" },
-                            "If you don't receive it within 5 minutes, check spam or junk email."
-                        )
-                    ),
-                    e(
-                        "div",
-                        { className: "mt-12 text-center" },
-                        e(
-                            "button",
-                            {
-                                onClick: () => window.location.reload(),
-                                className:
-                                    "text-slate-500 hover:text-white font-medium text-base underline transition-colors"
-                            },
-                            "Go back to start"
-                        )
-                    )
-                )
-            )
-        );
-    }
-
-    /* ------------------------------------------------
-       STEP CONTENT RENDERER
-    ------------------------------------------------ */
-    const renderStepContent = () => {
-        const step = steps[currentStep];
-
-        if (step.type === "text" || step.type === "email") {
-            return e(
-                "div",
-                { className: "max-w-md mx-auto py-8" },
-                e(
-                    "label",
-                    { className: "block text-slate-300 font-heading font-semibold mb-4 text-xl" },
-                    step.label
-                ),
-                e("input", {
-                    type: step.type,
-                    value: answers[step.id] || "",
-                    onChange: handleInputChange,
-                    onKeyDown: handleKeyDown,
-                    placeholder: step.placeholder,
-                    className:
-                        "w-full p-5 text-xl border-2 bg-slate-800 text-white placeholder-slate-500 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-900/50 transition-all " +
-                        (error ? "border-red-500" : "border-slate-700 focus:border-purple-500"),
-                    autoFocus: true
-                }),
-                error &&
-                    e(
-                        "p",
-                        { className: "text-red-400 mt-3 text-base flex items-center gap-2" },
-                        e(AlertCircle, { className: "w-5 h-5" }),
-                        error
-                    )
-            );
-        }
-
-        if (step.type === "rating") {
-            const currentRating = answers[step.id];
-
-            return e(
-                "div",
-                { className: "max-w-xl mx-auto" },
-                e(
-                    "div",
-                    { className: "bg-purple-900/10 p-8 rounded-xl mb-8 border border-purple-900/30" },
-                    e(
-                        "p",
-                        {
-                            className:
-                                "text-base font-heading font-bold text-purple-400 uppercase tracking-wide mb-4 flex items-center gap-2"
-                        },
-                        e(AlertCircle, { className: "w-5 h-5" }),
-                        "Common symptoms in this area:"
-                    ),
-                    e(
-                        "ul",
-                        { className: "space-y-3" },
-                        step.symptoms.map((s, i) =>
-                            e(
-                                "li",
-                                {
-                                    key: i,
-                                    className:
-                                        "flex items-start gap-3 text-slate-300 text-lg"
-                                },
-                                e("span", { className: "text-purple-500 mt-1.5" }, "•"),
-                                s
-                            )
-                        )
-                    )
-                ),
-
-                e(
-                    "div",
-                    { className: "text-center mb-4" },
-                    e(
-                        "span",
-                        { className: "text-xl font-heading font-bold text-white block mb-6" },
-                        "Rate the severity of this challenge:"
-                    )
-                ),
-
-                e(
-                    "div",
-                    { className: "flex justify-between items-center gap-3 mb-4" },
-                    [1, 2, 3, 4, 5].map((val) =>
-                        e(
-                            "button",
-                            {
-                                key: val,
-                                onClick: () => handleRating(val),
-                                className:
-                                    "w-16 h-16 sm:w-20 sm:h-20 rounded-xl text-2xl font-heading font-bold transition-all duration-200 border-2 shadow-sm " +
-                                    (currentRating === val
-                                        ? "bg-purple-600 text-white border-purple-500 scale-110 shadow-lg shadow-purple-900/50 ring-4 ring-purple-900/30"
-                                        : "bg-slate-800 text-slate-400 border-slate-700 hover:border-purple-500/50 hover:text-purple-400")
-                            },
-                            val
-                        )
-                    )
-                ),
-
-                e(
-                    "div",
-                    { className: "flex justify-between px-2 text-sm font-semibold text-slate-500 uppercase tracking-wide" },
-                    e("span", null, "No Challenge"),
-                    e("span", null, "Critical Issue")
-                ),
-
-                error &&
-                    e(
-                        "p",
-                        {
-                            className: "text-red-400 mt-6 text-center text-base flex items-center justify-center gap-2"
-                        },
-                        e(AlertCircle, { className: "w-5 h-5" }),
-                        error
-                    )
-            );
-        }
-
-        if (step.type === "single") {
-            return e(
-                "div",
-                { className: "space-y-4" },
-                step.options.map((option, idx) => {
-                    const selected = answers[step.id]?.includes(option);
-
-                    return e(
-                        "div",
-                        {
-                            key: idx,
-                            onClick: () => handleSingleSelect(option),
-                            className:
-                                "cursor-pointer p-6 rounded-xl border-2 transition-all duration-200 flex items-center gap-5 group " +
-                                (selected
-                                    ? "border-purple-500 bg-purple-900/20 shadow-sm"
-                                    : "border-slate-800 bg-slate-800 hover:border-purple-500/30 shadow-sm")
-                        },
-                        e(
-                            "div",
-                            {
-                                className:
-                                    "w-8 h-8 rounded-full flex items-center justify-center border transition-colors flex-shrink-0 " +
-                                    (selected
-                                        ? "bg-purple-600 border-purple-600"
-                                        : "bg-slate-900 border-slate-600 group-hover:border-purple-500")
-                            },
-                            selected && e(CheckCircle2, { className: "w-5 h-5 text-white" })
-                        ),
-                        e(
-                            "span",
-                            { className: "font-medium text-lg " + (selected ? "text-white" : "text-slate-300") },
-                            option
-                        )
-                    );
-                }),
-                error &&
-                    e(
-                        "p",
-                        { className: "text-red-400 mt-3 text-base flex items-center gap-2" },
-                        e(AlertCircle, { className: "w-5 h-5" }),
-                        error
-                    )
-            );
-        }
-
-        return null;
-    };
-
-    /* ------------------------------------------------
-       MAIN FORM LAYOUT
-    ------------------------------------------------ */
-    const step = steps[currentStep];
-    const progress = (currentStep / steps.length) * 100;
-
-    return e(
-        "div",
-        { className: "min-h-screen bg-slate-950 flex flex-col items-center py-10 px-4 font-sans text-slate-200" },
-        e(
-            "div",
-            { className: "w-full max-w-2xl mb-8" },
-            e(
-                "div",
-                { className: "flex justify-between text-sm text-slate-500 font-medium mb-2 uppercase tracking-wide" },
-                e("span", null, `Step ${currentStep + 1} of ${steps.length}`),
-                e("span", null, `${Math.round(progress)}% Complete`)
-            ),
-            e(
-                "div",
-                { className: "h-3 w-full bg-slate-800 rounded-full overflow-hidden" },
-                e("div", {
-                    className: "h-full bg-gradient-to-r from-purple-600 to-fuchsia-600 transition-all duration-500 ease-out",
-                    style: { width: `${((currentStep + 1) / steps.length) * 100}%` }
-                })
-            )
-        ),
-
-        e(
-            "div",
-            {
-                className:
-                    "w-full max-w-2xl bg-slate-900 rounded-2xl shadow-2xl shadow-purple-900/10 overflow-hidden flex flex-col border border-slate-800"
+        // --- 6 PILLARS: 3 questions each = 18 diagnostic questions ---
+        const PILLARS = {
+            "Clarity & Strategy": {
+                id: "strategy", icon: <Icons.Target />,
+                questions: [
+                    { id: "s1", label: "Strategic Decision Logic", options: [
+                        { text: "I make moves based on gut feelings or messy data analysis.", score: 1 },
+                        { text: "I use tools like ChatGPT for brainstorming, but I still connect the dots manually.", score: 2 },
+                        { text: "AI monitors business data to generate research-backed strategic roadmaps.", score: 3 }
+                    ]},
+                    { id: "s2", label: "Expertise Storage", options: [
+                        { text: "My 10+ years of knowledge lives in my head. I am the primary bottleneck.", score: 1 },
+                        { text: "Knowledge is in PDFs and SOPs that are rarely used or updated.", score: 2 },
+                        { text: "My expertise is baked into AI systems that execute workflows for me.", score: 3 }
+                    ]},
+                    { id: "s3", label: "Offer Structure", options: [
+                        { text: "Every client project is a unique, manual build from scratch.", score: 1 },
+                        { text: "I have standard packages, but delivery still requires heavy manual lift.", score: 2 },
+                        { text: "Services are delivered through a high-margin, automated delivery stack.", score: 3 }
+                    ]}
+                ],
+                diagnosis: "You are the 'Human Router' of your business strategy. Without you in the room, growth stalls because the logic is not yet systemized."
             },
-            e(
-                "div",
-                { className: "p-10 border-b border-slate-800" },
-                e(
-                    "div",
-                    { className: "flex items-center gap-5 mb-3" },
-                    e(
-                        "div",
-                        { className: "p-4 bg-slate-800 rounded-xl border border-slate-700" },
-                        e(step.icon.type, { className: "w-8 h-8 " + (step.icon.props?.className || "") })
-                    ),
-                    e("h2", { className: "text-3xl font-heading font-bold text-white" }, step.category)
-                ),
-                e("p", { className: "text-slate-400 ml-20 text-lg" }, step.description)
-            ),
+            "Visibility & Content": {
+                id: "visibility", icon: <Icons.Megaphone />,
+                questions: [
+                    { id: "v1", label: "Content Creation Workflow", options: [
+                        { text: "I spend hours every week staring at a blank cursor. Content takes forever.", score: 1 },
+                        { text: "I use AI for outlines, but repurposing and scheduling is still my job.", score: 2 },
+                        { text: "One raw asset is automatically turned into a month of omnichannel content.", score: 3 }
+                    ]},
+                    { id: "v2", label: "Platform Presence", options: [
+                        { text: "I focus on one platform because I don't have time to manage others.", score: 1 },
+                        { text: "I copy and paste content across platforms manually.", score: 2 },
+                        { text: "Content is intelligently adapted for every platform without my input.", score: 3 }
+                    ]},
+                    { id: "v3", label: "Authority Measurement", options: [
+                        { text: "I track likes and views but can't link them to revenue.", score: 1 },
+                        { text: "I know which posts bring leads, but the tracking is manual.", score: 2 },
+                        { text: "Systems track the entire journey from post to payment automatically.", score: 3 }
+                    ]}
+                ],
+                diagnosis: "You are trading too much personal time for visibility. Your brand authority is scaling linearly with your effort, rather than exponentially with your systems."
+            },
+            "Sales & Pipeline": {
+                id: "sales", icon: <Icons.Zap />,
+                questions: [
+                    { id: "sa1", label: "Lead Qualification", options: [
+                        { text: "I personally vet every inquiry, often wasting time on tire-kickers.", score: 1 },
+                        { text: "I use forms to collect data, but I still have to score leads manually.", score: 2 },
+                        { text: "An automated system qualifies, scores, and books the right leads for me.", score: 3 }
+                    ]},
+                    { id: "sa2", label: "Follow-Up Cadence", options: [
+                        { text: "I follow up when I remember or see a notification in my inbox.", score: 1 },
+                        { text: "I use a CRM but have to set reminders and write emails manually.", score: 2 },
+                        { text: "Data-driven systems keep prospects warm until they are ready to buy.", score: 3 }
+                    ]},
+                    { id: "sa3", label: "Proposal Generation", options: [
+                        { text: "Every proposal takes 60-90 minutes of manual drafting.", score: 1 },
+                        { text: "I reuse sections but still spend significant time customizing each one.", score: 2 },
+                        { text: "AI generates personalized, data-backed proposals in minutes.", score: 3 }
+                    ]}
+                ],
+                diagnosis: "Your sales pipeline has 'leaky bucket' syndrome. High-value leads are slipping through because the manual effort to nurture them is too high."
+            },
+            "Client Experience": {
+                id: "experience", icon: <Icons.Sparkles />,
+                questions: [
+                    { id: "c1", label: "Client Onboarding", options: [
+                        { text: "Onboarding is a series of manual emails and 'getting started' calls.", score: 1 },
+                        { text: "I follow a standard checklist, but I still have to trigger every step.", score: 2 },
+                        { text: "Payment triggers project setup, portals, and info-gathering instantly.", score: 3 }
+                    ]},
+                    { id: "c2", label: "Support & Communication", options: [
+                        { text: "Clients email me directly for everything. I am their help desk.", score: 1 },
+                        { text: "There is a ticketing system, but most questions still require a human reply.", score: 2 },
+                        { text: "An AI agent handles 80% of routine client queries instantly.", score: 3 }
+                    ]},
+                    { id: "c3", label: "Success Tracking", options: [
+                        { text: "I only know if a client is happy if they tell me (or don't complain).", score: 1 },
+                        { text: "I send monthly reports that take hours to put together.", score: 2 },
+                        { text: "Clients have a live dashboard showing progress and ROI in real-time.", score: 3 }
+                    ]}
+                ],
+                diagnosis: "Your delivery model is high-friction. As you grow, the weight of client management will break your ability to find new business."
+            },
+            "Ops & Admin": {
+                id: "ops", icon: <Icons.Layers />,
+                questions: [
+                    { id: "o1", label: "Tool Connectivity", options: [
+                        { text: "My tools don't talk to each other. I am the human bridge for data.", score: 1 },
+                        { text: "Some tools are connected via Zapier, but there are constant gaps.", score: 2 },
+                        { text: "Data flows automatically from CRM to fulfillment to finance.", score: 3 }
+                    ]},
+                    { id: "o2", label: "Task Management", options: [
+                        { text: "I start my day by answering whoever screamed loudest in my inbox.", score: 1 },
+                        { text: "I have a to-do list, but it's disconnected from my team's actual work.", score: 2 },
+                        { text: "Priorities are dynamically assigned based on real business goals.", score: 3 }
+                    ]},
+                    { id: "o3", label: "Knowledge Transfer", options: [
+                        { text: "New hires have to sit with me for weeks to learn how things work.", score: 1 },
+                        { text: "I have some recordings, but finding the right info is difficult.", score: 2 },
+                        { text: "Systems guide team members through tasks with AI-powered support.", score: 3 }
+                    ]}
+                ],
+                diagnosis: "You are paying an 'Invisible Tax' of 10-15 hours a week on manual admin that should be handled by systems, not your brain."
+            },
+            "Custom Tools & IP": {
+                id: "tools", icon: <Icons.Lightbulb />,
+                questions: [
+                    { id: "t1", label: "Expertise Capture", options: [
+                        { text: "Our expertise lives in the founder's head. Nothing is captured or reusable.", score: 1 },
+                        { text: "We have templates and docs, but they're scattered and hard to find.", score: 2 },
+                        { text: "Our expertise is packaged into tools, calculators, and frameworks anyone can use.", score: 3 }
+                    ]},
+                    { id: "t2", label: "Reusable Frameworks", options: [
+                        { text: "We recreate proposals, frameworks, and deliverables from scratch each time.", score: 1 },
+                        { text: "We copy-paste from past work, but it still takes significant editing.", score: 2 },
+                        { text: "Standardized systems generate customized deliverables from our IP automatically.", score: 3 }
+                    ]},
+                    { id: "t3", label: "Client Self-Service", options: [
+                        { text: "Clients depend on us for everything. There's no way for them to self-serve.", score: 1 },
+                        { text: "We have a few resources, but clients rarely use them without prompting.", score: 2 },
+                        { text: "Clients access tools, dashboards, and resources that work without us being present.", score: 3 }
+                    ]}
+                ],
+                diagnosis: "Your most valuable asset \u2014 your expertise \u2014 is locked inside people's heads. Every time someone leaves or gets busy, that knowledge disappears."
+            }
+        };
 
-            e("div", { className: "p-10 bg-slate-950/30 flex-grow" }, renderStepContent()),
+        const TOTAL_QUESTIONS = 18;
+        const pillarKeys = Object.keys(PILLARS);
 
-            e(
-                "div",
-                { className: "p-8 bg-slate-900 border-t border-slate-800 flex justify-between items-center" },
-                e(
-                    "button",
-                    {
-                        onClick: handleBack,
-                        className:
-                            "flex items-center gap-2 px-6 py-4 rounded-lg font-medium text-lg transition-colors text-slate-500 hover:bg-slate-800 hover:text-white"
-                    },
-                    e(ArrowLeft, { className: "w-5 h-5" }),
-                    "Back"
-                ),
-                e(
-                    "button",
-                    {
-                        onClick: handleNext,
-                        className:
-                            "bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-4 px-10 text-lg rounded-lg transition-all shadow-lg shadow-purple-900/30 flex items-center gap-3"
-                    },
-                    currentStep === steps.length - 1 ? "Get My Score" : "Next Step",
-                    currentStep !== steps.length - 1 && e(ChevronRight, { className: "w-5 h-5" })
-                )
-            )
-        )
-    );
-};
+        function App() {
+            const [step, setStep] = useState('welcome'); // welcome, contact, questions, submitting, results
+            const [name, setName] = useState('');
+            const [email, setEmail] = useState('');
+            const [contactError, setContactError] = useState('');
+            const [contactField, setContactField] = useState('name'); // name or email
+            const [pillarIdx, setPillarIdx] = useState(0);
+            const [questionIdx, setQuestionIdx] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [results, setResults] = useState(null);
 
-/* ------------------------------------------------
-   REACT MOUNT
------------------------------------------------- */
-window.addEventListener("load", () => {
-    const container = document.getElementById("root-systems-audit");
-    if (container) {
-        const root = ReactDOM.createRoot(container);
-        root.render(e(SystemsAudit, null));
-    }
-});
-</script>
+            const currentPillarKey = pillarKeys[pillarIdx];
+            const currentPillar = PILLARS[currentPillarKey];
+            const currentQuestion = currentPillar?.questions[questionIdx];
+            const answeredCount = Object.keys(answers).length;
 
+            // --- CONTACT FORM ---
+            const handleContactNext = () => {
+                setContactError('');
+                if (contactField === 'name') {
+                    if (!name.trim()) { setContactError('This field is required'); return; }
+                    setContactField('email');
+                } else {
+                    if (!email.trim()) { setContactError('This field is required'); return; }
+                    if (!/\S+@\S+\.\S+/.test(email)) { setContactError('Please enter a valid email'); return; }
+                    setStep('questions');
+                }
+            };
+
+            const handleContactBack = () => {
+                setContactError('');
+                if (contactField === 'email') {
+                    setContactField('name');
+                } else {
+                    setStep('welcome');
+                }
+            };
+
+            const handleContactKeyDown = (ev) => {
+                if (ev.key === 'Enter') handleContactNext();
+            };
+
+            // --- QUESTIONS ---
+            const handleAnswer = (opt) => {
+                const newAnswers = { ...answers, [currentQuestion.id]: opt };
+                setAnswers(newAnswers);
+
+                if (questionIdx < currentPillar.questions.length - 1) {
+                    setQuestionIdx(v => v + 1);
+                } else if (pillarIdx < pillarKeys.length - 1) {
+                    setPillarIdx(v => v + 1);
+                    setQuestionIdx(0);
+                } else {
+                    submitResults(newAnswers);
+                }
+            };
+
+            const handleQuestionBack = () => {
+                if (questionIdx > 0) {
+                    setQuestionIdx(v => v - 1);
+                } else if (pillarIdx > 0) {
+                    const prevIdx = pillarIdx - 1;
+                    setPillarIdx(prevIdx);
+                    setQuestionIdx(PILLARS[pillarKeys[prevIdx]].questions.length - 1);
+                } else {
+                    setStep('contact');
+                    setContactField('email');
+                }
+            };
+
+            // --- RESULTS & SUBMISSION ---
+
+            // Tiebreaker weights: when two pillars have the same friction,
+            // the one with the higher weight wins as the #1 constraint.
+            // Order reflects business impact (revenue > time > retention > growth > direction > scale).
+            const TIEBREAKER = { sales: 6, ops: 5, experience: 4, visibility: 3, strategy: 2, tools: 1 };
+
+            const submitResults = async (finalAnswers) => {
+                setStep('submitting');
+
+                // Calculate scores per pillar using raw (unrounded) friction for sorting
+                const scores = pillarKeys.map(key => {
+                    const pillar = PILLARS[key];
+                    const pillarAnswers = pillar.questions.map(q => finalAnswers[q.id]);
+                    const rawTotal = pillarAnswers.reduce((sum, a) => sum + a.score, 0);
+                    const avg = rawTotal / pillarAnswers.length;
+                    const rawFriction = (1 - (avg / 3)) * 100;
+                    const friction = Math.round(rawFriction);
+                    return { key, id: pillar.id, friction, rawFriction, avg: Math.round(avg * 100) / 100 };
+                });
+
+                const totalScore = scores.reduce((sum, s) => sum + s.friction, 0);
+
+                // Sort by raw friction first, then by tiebreaker weight
+                const sorted = [...scores].sort((a, b) => {
+                    const diff = b.rawFriction - a.rawFriction;
+                    if (Math.abs(diff) > 0.01) return diff;
+                    return (TIEBREAKER[b.id] || 0) - (TIEBREAKER[a.id] || 0);
+                });
+
+                // Nudge display: if the top two show the same rounded %, bump the winner by 1
+                // so there's always a visible gap on screen
+                if (sorted.length >= 2 && sorted[0].friction === sorted[1].friction) {
+                    sorted[0].friction = Math.min(sorted[0].friction + 1, 100);
+                }
+
+                const topPriority = sorted[0].key;
+
+                // Build payload
+                const payload = {
+                    name: name.trim(),
+                    email: email.trim(),
+                    top_bottleneck_score: sorted[0].friction,
+                    priority: topPriority,
+                    priority_ranked: sorted.map(s => s.key).join(", "),
+                    strategy_friction: scores.find(s => s.id === 'strategy').friction,
+                    visibility_friction: scores.find(s => s.id === 'visibility').friction,
+                    sales_friction: scores.find(s => s.id === 'sales').friction,
+                    experience_friction: scores.find(s => s.id === 'experience').friction,
+                    ops_friction: scores.find(s => s.id === 'ops').friction,
+                    tools_friction: scores.find(s => s.id === 'tools').friction,
+                    strategy_avg: scores.find(s => s.id === 'strategy').avg,
+                    visibility_avg: scores.find(s => s.id === 'visibility').avg,
+                    sales_avg: scores.find(s => s.id === 'sales').avg,
+                    experience_avg: scores.find(s => s.id === 'experience').avg,
+                    ops_avg: scores.find(s => s.id === 'ops').avg,
+                    tools_avg: scores.find(s => s.id === 'tools').avg,
+                    submittedAt: new Date().toISOString(),
+                    source: "Growth Systems Score",
+                };
+
+                // Send webhook (with retry)
+                const minDelay = new Promise(r => setTimeout(r, 2000));
+                let webhookOk = false;
+                try {
+                    const res = await fetch(WEBHOOK_URL, {
+                        method: "POST",
+                        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                    webhookOk = res.ok;
+                } catch (err) { console.warn("Webhook error:", err); }
+
+                if (!webhookOk) {
+                    try {
+                        await fetch(WEBHOOK_URL, {
+                            method: "POST",
+                            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                            body: JSON.stringify(payload)
+                        });
+                    } catch (err) { console.warn("Webhook retry failed:", err); }
+                }
+
+                await minDelay;
+                setResults({ blocker: topPriority, all: sorted, totalScore });
+                setStep('results');
+                window.scrollTo(0, 0);
+            };
+
+            // ===== RENDER =====
+            return (
+                <div className="min-h-screen w-full flex items-center justify-center p-4">
+                    {/* Background glow */}
+                    <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/10 blur-[120px] rounded-full" />
+                        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-fuchsia-900/10 blur-[120px] rounded-full" />
+                    </div>
+
+                    <div className="relative w-full max-w-3xl z-10">
+
+                        {/* ====== WELCOME ====== */}
+                        {step === 'welcome' && (
+                            <div className="animate-fade-in">
+                                <div className="bg-slate-900 rounded-2xl shadow-2xl shadow-purple-900/20 overflow-hidden border border-slate-800">
+                                    <div className="bg-gradient-to-br from-purple-900 via-slate-900 to-slate-900 p-10 text-white text-center relative overflow-hidden">
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/20 blur-3xl rounded-full" />
+                                        <div className="relative z-10">
+                                            <div className="flex justify-center mb-6"><Icons.BarChart /></div>
+                                            <h1 className="text-4xl font-heading font-bold mb-6">Growth Systems Score</h1>
+                                            <p className="text-slate-200 text-xl mb-2">You know something is slowing your business down.</p>
+                                            <p className="text-slate-200 text-xl mb-4">You're just not sure what to fix first.</p>
+                                            <p className="text-slate-400 text-lg mt-4 max-w-lg mx-auto">Answer 18 diagnostic questions across 6 business systems. We'll pinpoint exactly where your biggest friction is &mdash; and what to do about it.</p>
+                                            <p className="text-slate-500 italic mt-6 text-xs max-w-sm mx-auto">By completing this score, you give us permission to email you your results.</p>
+                                        </div>
+                                    </div>
+                                    <div className="p-10 bg-slate-900">
+                                        <div className="flex items-center justify-center gap-6 mb-8 text-slate-400 text-sm">
+                                            <span className="flex items-center gap-2"><Icons.Clock /> Takes 3 minutes</span>
+                                            <span className="flex items-center gap-2"><Icons.Mail /> Results emailed instantly</span>
+                                        </div>
+                                        <button
+                                            onClick={() => { setStep('contact'); setContactField('name'); }}
+                                            className="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-5 px-8 text-xl rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg shadow-purple-900/20 transform hover:-translate-y-0.5 active:scale-95"
+                                        >
+                                            Find Out Where You're Stuck <Icons.ArrowRight />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* ====== CONTACT (name / email) ====== */}
+                        {step === 'contact' && (
+                            <div className="animate-fade-in">
+                                <div className="w-full mb-8">
+                                    <div className="flex justify-between text-xs text-slate-500 font-medium mb-2 uppercase tracking-wide font-heading">
+                                        <span>{contactField === 'name' ? 'Step 1 of 20' : 'Step 2 of 20'}</span>
+                                        <span>{contactField === 'name' ? '5' : '10'}% Complete</span>
+                                    </div>
+                                    <div className="h-3 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div className="h-full bg-gradient-to-r from-purple-600 to-fuchsia-600 transition-all duration-500" style={{ width: contactField === 'name' ? '5%' : '10%' }} />
+                                    </div>
+                                </div>
+
+                                <div className="bg-slate-900 rounded-2xl shadow-2xl shadow-purple-900/10 overflow-hidden border border-slate-800">
+                                    <div className="p-10 border-b border-slate-800">
+                                        <div className="flex items-center gap-5 mb-3">
+                                            <div className="p-4 bg-slate-800 rounded-xl border border-slate-700 text-purple-400"><Icons.User /></div>
+                                            <h2 className="text-3xl font-heading font-bold text-white">{contactField === 'name' ? 'About You' : 'Contact Info'}</h2>
+                                        </div>
+                                        <p className="text-slate-400 ml-20 text-lg">{contactField === 'name' ? "First, let's get to know you." : "Where should we send your results?"}</p>
+                                    </div>
+                                    <div className="p-10 bg-slate-950/30">
+                                        <div className="max-w-md mx-auto py-8">
+                                            <label className="block text-slate-300 font-heading font-semibold mb-4 text-xl">
+                                                {contactField === 'name' ? 'What is your first name?' : 'What is your work email?'}
+                                            </label>
+                                            <input
+                                                type={contactField === 'name' ? 'text' : 'email'}
+                                                value={contactField === 'name' ? name : email}
+                                                onChange={(ev) => { contactField === 'name' ? setName(ev.target.value) : setEmail(ev.target.value); if (contactError) setContactError(''); }}
+                                                onKeyDown={handleContactKeyDown}
+                                                placeholder={contactField === 'name' ? 'e.g., Marcus' : 'name@company.com'}
+                                                autoFocus
+                                                className={`w-full p-5 text-xl border-2 bg-slate-800 text-white placeholder-slate-500 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-900/50 transition-all ${contactError ? 'border-red-500' : 'border-slate-700 focus:border-purple-500'}`}
+                                            />
+                                            {contactError && (
+                                                <p className="text-red-400 mt-3 text-base flex items-center gap-2"><Icons.AlertCircle /> {contactError}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="p-8 bg-slate-900 border-t border-slate-800 flex justify-between items-center">
+                                        <button onClick={handleContactBack} className="flex items-center gap-2 px-6 py-4 rounded-lg font-medium text-lg text-slate-500 hover:bg-slate-800 hover:text-white transition-colors">
+                                            <Icons.ArrowLeft /> Back
+                                        </button>
+                                        <button onClick={handleContactNext} className="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-4 px-10 text-lg rounded-lg transition-all shadow-lg shadow-purple-900/30 flex items-center gap-3">
+                                            Next <Icons.ArrowRight />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* ====== QUESTIONS ====== */}
+                        {step === 'questions' && (
+                            <div className="space-y-8 animate-fade-in" key={`${pillarIdx}-${questionIdx}`}>
+                                {/* Progress */}
+                                <div>
+                                    <div className="flex justify-between text-xs text-slate-500 font-medium mb-2 uppercase tracking-wide font-heading">
+                                        <span>Question {answeredCount + 1} of {TOTAL_QUESTIONS}</span>
+                                        <span>{Math.round(((answeredCount + 2) / 20) * 100)}% Complete</span>
+                                    </div>
+                                    <div className="h-3 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div className="h-full bg-gradient-to-r from-purple-600 to-fuchsia-600 transition-all duration-500" style={{ width: `${((answeredCount + 2) / 20) * 100}%` }} />
+                                    </div>
+                                </div>
+
+                                {/* Pillar label */}
+                                <div className="flex items-center gap-2 text-purple-400 font-heading font-bold text-sm uppercase tracking-widest">
+                                    {currentPillar.icon} <span>{currentPillarKey}</span>
+                                </div>
+
+                                {/* Question */}
+                                <h2 className="text-2xl md:text-3xl font-heading font-bold leading-tight text-white">{currentQuestion.label}</h2>
+
+                                {/* Options */}
+                                <div className="grid gap-3">
+                                    {currentQuestion.options.map((opt, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => handleAnswer(opt)}
+                                            className="w-full text-left p-6 bg-slate-900 border-2 border-slate-800 rounded-2xl hover:border-purple-500/40 hover:bg-slate-800/80 transition-all flex gap-5 items-start group"
+                                        >
+                                            <div className="w-6 h-6 rounded-full border-2 border-slate-700 mt-0.5 flex-shrink-0 group-hover:border-purple-500 transition-colors flex items-center justify-center">
+                                                <div className="w-2.5 h-2.5 rounded-full bg-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </div>
+                                            <span className="text-slate-300 group-hover:text-white font-medium text-lg leading-snug">{opt.text}</span>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {/* Back */}
+                                <div className="flex justify-between items-center pt-6 border-t border-slate-800">
+                                    <button onClick={handleQuestionBack} className="flex items-center gap-2 text-slate-500 hover:text-white font-medium text-base transition-colors px-2 py-1">
+                                        <Icons.ArrowLeft /> Back
+                                    </button>
+                                    <span className="text-xs text-slate-600 uppercase tracking-widest font-heading font-bold">
+                                        Pillar {pillarIdx + 1} of 6
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* ====== SUBMITTING ====== */}
+                        {step === 'submitting' && (
+                            <div className="text-center py-20 space-y-6 animate-fade-in">
+                                <div className="flex justify-center"><Icons.Loader /></div>
+                                <h2 className="text-2xl font-heading font-bold text-white">Analyzing Your Systems...</h2>
+                                <p className="text-slate-400 text-lg">Finding where your biggest friction is...</p>
+                            </div>
+                        )}
+
+                        {/* ====== RESULTS ====== */}
+                        {step === 'results' && results && (
+                            <div className="space-y-4 animate-fade-in">
+
+                                {/* ROW 1: Score left + Breakdown right */}
+                                <div className="bg-slate-900 rounded-2xl shadow-2xl shadow-purple-900/20 border border-slate-800 overflow-hidden">
+                                    <div className="grid md:grid-cols-5">
+
+                                        {/* LEFT — Big score + constraint */}
+                                        <div className="md:col-span-2 bg-gradient-to-br from-purple-900/60 via-slate-900 to-slate-900 p-6 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/10 blur-3xl rounded-full" />
+                                            <div className="relative z-10">
+                                                <div className="text-8xl font-heading font-black text-purple-400 tracking-tighter leading-none">{results.all[0].friction}%</div>
+                                                <div className="text-sm font-heading font-bold uppercase tracking-widest text-slate-500 mt-3 mb-5">Friction</div>
+                                                <h2 className="text-xl font-heading font-bold text-white leading-snug">{results.blocker}</h2>
+                                                <p className="text-slate-400 text-sm mt-3 italic leading-relaxed">"{PILLARS[results.blocker].diagnosis}"</p>
+                                            </div>
+                                        </div>
+
+                                        {/* RIGHT — All 6 pillar bars */}
+                                        <div className="md:col-span-3 p-6 flex flex-col justify-center border-l border-slate-800">
+                                            <p className="text-sm uppercase tracking-widest font-heading font-bold text-slate-500 mb-4">All Systems</p>
+                                            <div className="grid gap-3.5">
+                                                {results.all.map((p, i) => (
+                                                    <div key={p.key} className="flex items-center gap-4">
+                                                        <span className={`w-32 text-sm font-heading font-bold truncate ${i === 0 ? "text-purple-400" : "text-slate-500"}`}>
+                                                            {i === 0 ? "\u2192 " : ""}{p.key}
+                                                        </span>
+                                                        <div className="flex-1 h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                                                            <div
+                                                                className={`h-full transition-all duration-1000 rounded-full ${i === 0 ? "bg-gradient-to-r from-purple-600 to-fuchsia-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]" : "bg-slate-700"}`}
+                                                                style={{ width: `${p.friction}%` }}
+                                                            />
+                                                        </div>
+                                                        <span className={`w-10 text-right text-sm font-heading font-bold ${i === 0 ? "text-purple-400" : "text-slate-600"}`}>{p.friction}%</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm text-slate-500 mt-5">
+                                                <Icons.Mail /> <span>Full report sent to <span className="text-purple-400 font-semibold">{email}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* ROW 2: Blueprint CTA */}
+                                <div className="bg-gradient-to-r from-purple-900/40 via-slate-900 to-slate-900 rounded-2xl border border-purple-800/40 p-5">
+                                    <div className="grid md:grid-cols-5 gap-5 items-center">
+                                        <div className="md:col-span-3 space-y-2">
+                                            <h3 className="text-xl font-heading font-bold text-white leading-snug">Get the Free Blueprint to Fix This</h3>
+                                            <p className="text-slate-400 text-base">How to use AI to free your team from operational mess and build the systems that actually grow your business — the 6 Growth Systems broken down with examples, the 5 Levels of AI implementation, and a prioritization matrix so you know exactly where to start.</p>
+                                        </div>
+                                        <div className="md:col-span-2 flex flex-col items-center gap-1.5">
+                                            <a href="https://weignitegrowth.com/blueprint" target="_blank" rel="noopener noreferrer" className="w-full text-center bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-heading font-bold py-4 px-6 text-lg rounded-xl transition-all shadow-lg shadow-purple-900/30 flex items-center justify-center gap-3">
+                                                Get the Free Blueprint <Icons.ArrowRight />
+                                            </a>
+                                            <p className="text-slate-600 text-xs">Free. No fluff. Just the plan.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
