@@ -279,6 +279,13 @@
                     return (TIEBREAKER[b.id] || 0) - (TIEBREAKER[a.id] || 0);
                 });
 
+                // Custom Tools & IP should never be the #1 priority — it's an
+                // enablement layer, not the root constraint.  If it landed on top,
+                // swap it with #2 so a revenue/ops pillar leads the diagnosis.
+                if (sorted.length >= 2 && sorted[0].id === 'tools') {
+                    [sorted[0], sorted[1]] = [sorted[1], sorted[0]];
+                }
+
                 // Nudge display: if the top two show the same rounded %, bump the winner by 1
                 // so there's always a visible gap on screen
                 if (sorted.length >= 2 && sorted[0].friction === sorted[1].friction) {
